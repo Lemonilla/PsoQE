@@ -176,9 +176,36 @@ namespace Library
                         switch (type)
                         {
                             case 1: // Object
+                                var entries = table_body_size / 68;
+                                for (int entryNumber = 0; entryNumber < entries; entryNumber++)
+                                {
+                                    var obj = new Models.Object();
+                                    UInt16 object_type = reader.ReadUInt16();
+                                    reader.ReadBytes(6); //unknown
+                                    UInt16 id = reader.ReadUInt16();
+                                    UInt16 group = reader.ReadUInt16();
+                                    UInt16 section = reader.ReadUInt16();
+                                    reader.ReadBytes(2); //unknown
+                                    Single x = reader.ReadSingle();
+                                    Single y = reader.ReadSingle();
+                                    Single z = reader.ReadSingle();
+                                    UInt32 rotx = reader.ReadUInt32();
+                                    UInt32 roty = reader.ReadUInt32();
+                                    UInt32 rotz = reader.ReadUInt32();
+                                    reader.ReadBytes(6); //unknown
+                                    UInt32 objectId = reader.ReadUInt32();
+                                    UInt32 action = reader.ReadUInt32();
+                                    reader.ReadBytes(14); //unknown
 
+                                    // TODO: Convert to object && add to map
+
+                                }
                                 break;
                             case 2: // NPC
+                                entries = table_body_size / 72;
+                                for (int entryNumber = 0; entryNumber < entries; entryNumber++)
+                                {
+                                }
                                 break;
                             case 3: // Wave
                                 break;

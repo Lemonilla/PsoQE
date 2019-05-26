@@ -8,5 +8,11 @@ namespace Models
         public List<Event> Events { get; set; }
         public Floor FloorCode { get; set; }
         public byte FloorNumber { get; set; }
+
+        public Map()
+        {
+            Entities = new List<IEntity>();
+            Events = new List<Event>();
+        }
     }
 }
