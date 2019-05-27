@@ -5,11 +5,16 @@ namespace Models
 {
     public class Event
     {
-        public int EventNumber { get; set; }
-        public int Delay { get; set; }
-        public int SectionId { get; set; }
-        public int WaveId { get; set; }
+        public UInt32 EventNumber { get; set; }
+        public UInt16 Delay { get; set; }
+        public UInt16 SectionId { get; set; }
+        public UInt16 WaveId { get; set; }
         public List<IEventCommand> OnCompletion { get; set; } 
+
+        public Event()
+        {
+            OnCompletion = new List<IEventCommand>();
+        }
     }
 
     public abstract class IEventCommand
@@ -20,7 +25,7 @@ namespace Models
 
     public class UnlockDoorEvent : IEventCommand
     {
-        UnlockDoorEvent(UInt16 id)
+        public UnlockDoorEvent(UInt16 id)
         {
             Code = EventCommandCode.UnlockDoor;
             param = new List<object>() { id };
@@ -28,7 +33,7 @@ namespace Models
     }
     public class LockDoorEvent : IEventCommand
     {
-        LockDoorEvent(UInt16 id)
+        public LockDoorEvent(UInt16 id)
         {
             Code = EventCommandCode.LockDoor;
             param = new List<object>() { id };
@@ -36,7 +41,7 @@ namespace Models
     }
     public class CallEvent : IEventCommand
     {
-        CallEvent(UInt16 id)
+        public CallEvent(UInt32 id)
         {
             Code = EventCommandCode.CallEvent;
             param = new List<object>() { id };
@@ -44,7 +49,7 @@ namespace Models
     }
     public class UnhideEvent : IEventCommand
     {
-        UnhideEvent(UInt16 sectionId, UInt16 appear_flag)
+        public UnhideEvent(UInt16 sectionId, UInt16 appear_flag)
         {
             Code = EventCommandCode.CallEvent;
             param = new List<object>() { sectionId, appear_flag };

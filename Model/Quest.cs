@@ -33,8 +33,12 @@ namespace Models
             get { return _longDesc; }
             set {
                 if (value.Length > 288)
+                {
                     _errors.Add(ErrorCode.LongDescriptionTruncated);
-                _longDesc = value.Substring(0, 288);
+                    _longDesc = value.Trim('\0').Substring(0, 288);
+                }
+                else
+                    _longDesc = value.Trim('\0');
             }
         }
         public string ShortDescription
@@ -42,8 +46,12 @@ namespace Models
             get { return _shortDesc; }
             set {
                 if (value.Length > 128)
+                {
                     _errors.Add(ErrorCode.ShortDescriptionTruncated);
-                _shortDesc = value.Substring(0, 128);
+                    _shortDesc = value.Trim('\0').Substring(0, 128);
+                }
+                else
+                    _shortDesc = value.Trim('\0');
             }
         }
         public long Number
@@ -61,8 +69,12 @@ namespace Models
             get { return _name; }
             set {
                 if (value.Length > 32)
+                {
                     _errors.Add(ErrorCode.NameTruncated);
-                _name = value.Substring(0, 32);
+                    _name = value.Trim('\0').Substring(0, 32);
+                }
+                else
+                    _name = value.Trim('\0');
             }
         }
         public Version ClientVersion {
