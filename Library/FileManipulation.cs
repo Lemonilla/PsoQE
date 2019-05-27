@@ -128,10 +128,10 @@ namespace Library
                         reader.ReadUInt16(); //whitespace.  Should be 0xFFFF
                         quest.LanguageCode = reader.ReadUInt32();
                         quest.Number = reader.ReadUInt32();
-                        quest.Name = unicodeEncoder.GetString(reader.ReadBytes(32));
-                        quest.ShortDescription = unicodeEncoder.GetString(reader.ReadBytes(128));
-                        quest.LongDescription = unicodeEncoder.GetString(reader.ReadBytes(288));
-                        reader.ReadUInt32();//whitespace
+                        quest.Name = unicodeEncoder.GetString(reader.ReadBytes(64));
+                        quest.ShortDescription = unicodeEncoder.GetString(reader.ReadBytes(256));
+                        quest.LongDescription = unicodeEncoder.GetString(reader.ReadBytes(576));
+                        UInt32 unknown = reader.ReadUInt32();//whitespace
                         List<UInt32> items = new List<UInt32>();
                         for (int i = 0; i < 932; i++) items.Add(reader.ReadUInt32());
                         ItemList itemList = new ItemList();
@@ -289,10 +289,14 @@ namespace Library
                                     UInt16 delay = reader.ReadUInt16();
                                     UInt16 unknown = reader.ReadUInt16();
                                     UInt32 waveClearEventOffset= reader.ReadUInt32();
+
+                                    // build event
                                     e.EventNumber = id;
                                     e.SectionId = section;
                                     e.WaveId = wave;
                                     e.Delay = delay;
+
+                                    // parse event commands
                                     long currentPosition = reader.BaseStream.Position;
                                     reader.BaseStream.Position = startOfEvents + waveClearEventOffset;
                                     bool hasCommands = true;
@@ -301,7 +305,7 @@ namespace Library
                                         byte command = reader.ReadByte();
                                         switch(command)
                                         {
-                                            case 0x01:
+                                            case 0x01: // end of commands
                                                 hasCommands = false;
                                                 break;
                                             case 0x0a: // unlock

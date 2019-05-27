@@ -17,7 +17,10 @@ namespace Models
         List<ErrorCode> _errors;
         UInt32 _language;
 
-
+        public Quest()
+        {
+            _errors = new List<ErrorCode>();
+        }
 
 
         // DAT
