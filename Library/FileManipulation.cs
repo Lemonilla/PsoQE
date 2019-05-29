@@ -321,6 +321,7 @@ namespace Library
                                                 e.OnCompletion.Add(new UnhideEvent(reader.ReadUInt16(),reader.ReadUInt16()));
                                                 break;
                                             default:
+                                                quest.Errors.Add(ErrorCodes.UnknownEventCode);
                                                 break;
                                         }
                                     }
@@ -330,6 +331,7 @@ namespace Library
                                 reader.BaseStream.Position = endOfChunk;
                                 break;
                             default: // Unhandled tables
+                                Console.WriteLine("Unhandled table " + type);
                                 break;
                         }
                         

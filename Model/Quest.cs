@@ -14,12 +14,12 @@ namespace Models
         string _longDesc;
         long _questNumber;
         Version _version;
-        List<ErrorCode> _errors;
+        List<ErrorCodes> _errors;
         UInt32 _language;
 
         public Quest()
         {
-            _errors = new List<ErrorCode>();
+            _errors = new List<ErrorCodes>();
         }
 
 
@@ -31,13 +31,13 @@ namespace Models
         public Script Pasm { get; set; }
 
         // Metadata
-        public List<ErrorCode> Errors { get {return _errors; } }
+        public List<ErrorCodes> Errors { get {return _errors; } }
         public string LongDescription {
             get { return _longDesc; }
             set {
                 if (value.Length > 288)
                 {
-                    _errors.Add(ErrorCode.LongDescriptionTruncated);
+                    _errors.Add(ErrorCodes.LongDescriptionTruncated);
                     _longDesc = value.Trim('\0').Substring(0, 288);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Models
             set {
                 if (value.Length > 128)
                 {
-                    _errors.Add(ErrorCode.ShortDescriptionTruncated);
+                    _errors.Add(ErrorCodes.ShortDescriptionTruncated);
                     _shortDesc = value.Trim('\0').Substring(0, 128);
                 }
                 else
@@ -63,7 +63,7 @@ namespace Models
             set
             {
                 if (value < 0 || (_version <= Version.Gamecube && value > UInt16.MaxValue) || (_version >= Version.Gamecube && value > UInt32.MaxValue))
-                    _errors.Add(ErrorCode.QuestNumberOutOfBounds);
+                    _errors.Add(ErrorCodes.QuestNumberOutOfBounds);
                 _questNumber = value;
             }
         }
@@ -73,7 +73,7 @@ namespace Models
             set {
                 if (value.Length > 32)
                 {
-                    _errors.Add(ErrorCode.NameTruncated);
+                    _errors.Add(ErrorCodes.NameTruncated);
                     _name = value.Trim('\0').Substring(0, 32);
                 }
                 else
@@ -88,7 +88,7 @@ namespace Models
             get { return  _language; }
             set {
                 _language = (UInt32) QuestLangauge.VerifyQuestLanguage((UInt32) value);
-                if (value == (UInt32) QuestLangauge.Language.Unknown) _errors.Add(ErrorCode.UnrecognizedQuestLanguage);
+                if (value == (UInt32) QuestLangauge.Language.Unknown) _errors.Add(ErrorCodes.UnrecognizedQuestLanguage);
             }
         }
 

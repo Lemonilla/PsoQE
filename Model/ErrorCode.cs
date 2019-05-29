@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public enum ErrorCode
+    public enum ErrorCodes
     {
         LongDescriptionTruncated,
         ShortDescriptionTruncated,
         QuestNumberOutOfBounds,
         NameTruncated,
-        UnrecognizedQuestLanguage
+        UnrecognizedQuestLanguage,
+        UnknownEventCode
     }
 }
